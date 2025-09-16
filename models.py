@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime, create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, Mapped
 from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional
@@ -18,6 +18,7 @@ class VacancyORM(Base):
     city = Column(String)
     link = Column(String, unique=True, index=True)
     parsed_at = Column(String)
+    description: Mapped[str] = Column(String)
 
     def __repr__(self):
         return f"<VacancyORM(title='{self.title}', company='{self.company}')>"
@@ -29,6 +30,7 @@ class VacancyBase(BaseModel):
     city: str
     link: str
     parsed_at: str
+    description: str
 
     class Config:
         from_attributes = True
